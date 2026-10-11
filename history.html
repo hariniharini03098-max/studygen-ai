@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📊 My Quiz History</h1>
+        <div class="performance-box">
+
+                <div class="performance-card">
+                    <h3>Total Attempts</h3>
+                    <p>{{ total_attempts }}</p>
+                </div>
+
+                <div class="performance-card">
+                    <h3>Average Score</h3>
+                    <p>{{ average_percentage }}%</p>
+                </div>
+
+                <div class="performance-card">
+                    <h3>Best Score</h3>
+                    <p>{{ best_score }} / 5</p>
+                </div>
+
+        </div>
+
+        {% if history %}
+
+            {% for quiz in history %}
+
+                <div class="question">
+
+                    <h3>📝 Quiz Attempt {{ loop.index }}</h3>
+                    <p>
+                        <strong>Score:</strong>
+                        {{ quiz.score }} / {{ quiz.total }}
+                    </p>
+
+                    <p>
+                        <strong>Percentage:</strong>
+                        {{ ((quiz.score / quiz.total) * 100)|round(2) }}%
+                    </p>
+                    {% if (quiz.score / quiz.total) * 100 >= 80 %}
+                            <p><strong>Status:</strong> 🟢 Excellent</p>
+
+                    {% elif (quiz.score / quiz.total) * 100 >= 50 %}
+                            <p><strong>Status:</strong> 🟡 Good</p>
+
+                    {% else %}
+                            <p><strong>Status:</strong> 🔴 Needs Improvement</p>
+                    {% endif %}
+
+                    <p>
+                        <strong>Date:</strong>
+                        {{ quiz.created_at }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No quiz attempts yet.</p>
+
+        {% endif %}
+
+        <br>
+
+        <a href="/dashboard">
+            <button type="button">🏠 Back to Dashboard</button>
+        </a>
+        <br><br>
+
+        <a href="/logout">
+            <button>Logout</button>
+        </a>
+        <br><br>
+
+        <a href="/delete_history"
+                onclick="return confirm('Are you sure you want to delete all quiz history?');">
+                    <button>Delete History</button>
+        </a>
+
+    </div>
+
+</body>
+</html>

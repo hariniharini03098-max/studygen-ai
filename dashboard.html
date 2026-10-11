@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>      
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🎓 Student Dashboard</h1>
+
+        <h2>Welcome, {{ username }}! 👋</h2>
+
+        <p>
+            Welcome to your AI Notes and Quiz Generator.
+        </p>
+
+        <hr>
+
+        <div class="question">
+
+            <h2>📚 Study Material</h2>
+
+            <p>
+                Upload your PDF study material to generate
+                AI-powered notes and quiz questions.
+            </p>
+
+            <a href="/">
+                <button type="button">
+                    Upload Study Material
+                </button>
+            </a>
+
+        </div>
+
+        <div class="question">
+
+            <h2>🧠 AI Quiz</h2>
+
+            <p>
+                Take the quiz generated from your study material.
+            </p>
+
+            <a href="/quiz">
+                <button type="button">
+                    Take Quiz
+                </button>
+            </a>
+
+        </div>
+
+        <div class="question">
+            <h2>📈 Quiz Performance</h2>
+
+            <div class="performance-box">
+
+                <div class="performance-card">
+                    <h3>Total Quizzes</h3>
+                    <p>{{ total_quizzes }}</p>
+                </div>
+
+                <div class="performance-card">
+                    <h3>Total Questions</h3>
+                    <p>{{ total_questions }}</p>
+                </div>
+
+                <div class="performance-card">
+                    <h3>Average Score</h3>
+                    <p>{{ average_score }}%</p>
+                </div>
+
+                <div class="performance-card">
+                    <h3>Highest Score</h3>
+                    <p>{{ highest_score }} / 5</p>
+                </div>
+
+            </div>
+    </div>
+            <h2>📈 Performance Graph</h2>
+
+            <div class="question">
+                <canvas id="performanceChart"></canvas>
+            </div>
+            <h2>📊 Quiz History</h2>
+            
+            {% if history %}
+                {% for quiz in history %}
+                    <p>
+                        <strong>Score:</strong> {{ quiz.score }} / {{ quiz.total }}
+                        <br>
+                        <strong>Date:</strong> {{ quiz.created_at }}
+                    </p>
+                    <hr>
+                {% endfor %}
+            {% else %}
+                <p>No quiz attempts yet.</p>
+            {% endif %}
+            <a href="/history">
+                    <button>View All Quiz History</button>
+            </a>
+        </div>
+
+        <div style="text-align:center; margin-top:30px;">
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+<script>
+
+const historyData = [
+    {% for quiz in history %}
+        {
+            score: {{ quiz.score }},
+            total: {{ quiz.total }}
+        }{% if not loop.last %},{% endif %}
+    {% endfor %}
+];
+
+const labels = historyData.map((quiz, index) => "Quiz " + (index + 1));
+
+const scores = historyData.map(quiz =>
+    Math.round((quiz.score / quiz.total) * 100)
+);
+
+const ctx = document.getElementById("performanceChart");
+
+new Chart(ctx, {
+    type: "line",
+
+    data: {
+        labels: labels,
+
+        datasets: [{
+            label: "Quiz Score (%)",
+            data: scores,
+            borderWidth: 3,
+            tension: 0.3
+        }]
+    },
+
+    options: {
+        responsive: true,
+
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                    display: true,
+                    text: "Score (%)"
+                }
+            },
+
+            x: {
+                title: {
+                    display: true,
+                    text: "Quiz Attempts"
+                }
+            }
+        }
+    }
+});
+
+</script>
+</body>
+
+</html>

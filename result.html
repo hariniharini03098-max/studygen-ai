@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quiz Result</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container result">
+
+        <h1>🎉 Quiz Completed Successfully!</h1>
+
+        <h2>Your Score</h2>
+
+       <h1>🏆 {{ score }} / {{ total }}</h1>
+        <p><strong>Percentage:</strong> {{ ((score / total) * 100)|round(2) }}%</p>
+        {% if (score / total) * 100 >= 80 %}
+            <p>🟢 <strong>Excellent Performance!</strong></p>
+        {% elif (score / total) * 100 >= 50 %}
+            <p>🟡 <strong>Good Performance!</strong></p>
+        {% else %}
+            <p>🔴 <strong>Keep Practicing!</strong></p>
+        {% endif %}
+
+        <p>
+            You answered {{ score }} out of {{ total }} questions correctly.
+        </p>
+
+        <hr>
+
+        <h2>📋 Answer Review</h2>
+
+        {% for result in results %}
+
+        <div class="question">
+
+            <h3>
+                {{ loop.index }}. {{ result.question }}
+            </h3>
+
+            <p>
+                <strong>Your Answer:</strong>
+                {{ result.user_answer if result.user_answer else "Not Answered" }}
+            </p>
+
+            <p>
+                <strong>Correct Answer:</strong>
+                {{ result.correct_answer }}
+            </p>
+
+            {% if result.status == "Correct" %}
+
+                <p>
+                    ✅ <strong>Correct!</strong>
+                </p>
+
+            {% else %}
+
+                <p>
+                    ❌ <strong>Wrong</strong>
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        {% endfor %}
+
+        <br>
+
+        <a href="/quiz">
+            <button type="button">Try Quiz Again</button>
+        </a>
+        <br><br>
+        <a href="/dashboard">
+            <button type="button">🏠 Back to Dashboard</button>
+        </a>
+        <br><br>
+        <a href="/logout">
+            <button type="button">🚪 Logout</button>
+        </a>
+
+        <br><br>
+
+        <a href="/">
+            Upload Another PDF
+        </a>
+
+    </div>
+
+</body>
+
+</html>

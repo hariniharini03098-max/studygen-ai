@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Generated Notes and Quiz</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Generated Study Notes</h1>
+
+        <h2>🖼️ Original Uploaded Image</h2>
+
+        {% if session.get("image_filename") %}
+            <div style="text-align:center; margin:20px;">
+                <img
+                    src="{{ url_for('uploaded_file', filename=session.get('image_filename')) }}"
+                    alt="Original uploaded image"
+                    style="max-width:100%; max-height:600px; border-radius:12px; border:1px solid #ddd;"
+                >
+            </div>
+        {% endif %}
+
+        <h2>📚 AI Generated Study Notes</h2>
+
+        <pre>{{ notes }}</pre>
+        <h2>🧠 AI Generated Quiz</h2>
+
+        <p>
+            Your quiz has been generated successfully.
+            Click the button below to take the quiz.
+        </p>
+
+        <div style="text-align:center; margin:25px;">
+            <a href="/quiz">
+                <button type="button">Take AI Quiz</button>
+            </a>
+        </div>
+        
+
+        <div style="text-align:center; margin:25px;">
+            <a href="/download_notes">
+                <button type="button">📥 Download Notes as PDF</button>
+            </a>
+        </div>
+        <hr>
+
+        <h2>📄 Original PDF Text</h2>
+
+        <pre>{{ text }}</pre>
+
+        <br>
+
+        <div style="text-align:center;">
+            <a href="/">Upload Another PDF</a>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

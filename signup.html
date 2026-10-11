@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up - AI Notes and Quiz Generator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>📝 Create Account</h1>
+
+        <p style="text-align:center;">
+            Create an account to use the AI Notes and Quiz Generator.
+        </p>
+
+        <form method="POST" action="/signup">
+
+            <label>Username</label>
+            <br>
+
+            <input type="text"
+                   name="username"
+                   required>
+
+            <br><br>
+
+            <label>Email</label>
+            <br>
+
+            <input type="email"
+                   name="email"
+                   required>
+
+            <br><br>
+
+            <label>Password</label>
+            <br>
+
+            <input type="password"
+                   name="password"
+                   required>
+
+            <br><br>
+
+            <div style="text-align:center;">
+
+                <button type="submit">
+                    Create Account
+                </button>
+
+            </div>
+
+        </form>
+
+        <p style="text-align:center; margin-top:20px;">
+            Already have an account?
+            <a href="/login">Login here</a>
+        </p>
+
+    </div>
+
+</body>
+
+</html>

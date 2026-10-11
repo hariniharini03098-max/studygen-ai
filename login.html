@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login - AI Notes and Quiz Generator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🔐 Student Login</h1>
+
+        <p style="text-align:center;">
+            Login to access the AI Notes and Quiz Generator.
+        </p>
+
+        <form method="POST" action="/login">
+
+            <label>Email</label>
+            <br>
+
+            <input type="email"
+                   name="email"
+                   required>
+
+            <br><br>
+
+            <label>Password</label>
+            <br>
+
+            <input type="password"
+                   name="password"
+                   required>
+
+            <br><br>
+
+            <div style="text-align:center;">
+
+                <button type="submit">
+                    Login
+                </button>
+
+            </div>
+
+        </form>
+
+        <p style="text-align:center; margin-top:20px;">
+            Don't have an account?
+            <a href="/signup">Create an account</a>
+        </p>
+
+    </div>
+
+</body>
+
+</html>
